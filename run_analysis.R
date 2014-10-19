@@ -1,4 +1,6 @@
 # Tested in R Version 3.1.1
+# You need to have internet connection in order to execute this R-script!
+
 # Project Settings / Dataset URL
 projectName <- "DataCleaning_Project"
 dataset <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"

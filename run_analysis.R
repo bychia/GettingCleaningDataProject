@@ -62,8 +62,15 @@ colnames(allData) <- features[[2]]
 ########################################################################
 # Filter function
 filterByWanted <- function(data){
-  #Get the indexes of the features names which contain "mean" or "std"
-  wantedColumns <- grep(pattern="mean|std|label|subject", x =colnames(data))
+  # Create a vector list from the column names of data
+  colNames <- colnames(data)
+  # Get the indexes of the features names which contain "mean" or "std"
+  wantedColumns <- grep(pattern="mean|std|label|subject", x =colNames)
+  # Discard feature names which contains "BodyBody" because it is not
+  # mentioned in the features_info.txt
+  unwantedColumns <- grep(pattern="BodyBody", x =colNames)
+  # Get final wanted columns
+  wantedColumns <- setdiff(wantedColumns, unwantedColumns)
   data[,wantedColumns]
 }
 # Start filtering the data

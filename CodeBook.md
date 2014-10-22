@@ -1,6 +1,6 @@
 # Tidy Data Set
-The cleaned data (tidyData.txt) in the repository contains 180 observations and 81 variables. 
-Among the 81 variables, 79 of them are from the `features_info.txt`. The other 2 variables are from `y_test.txt` and `subject_test.txt`; representing the type of activity and the subject ids for the corresponding observations respectively.
+The cleaned data (tidyData.txt) in the repository contains 180 observations and 72 variables. 
+Among the 72 variables, 70 of them are from the `features_info.txt`. The other 2 variables are from `y_test.txt` and `subject_test.txt`; representing the type of activity and the subject ids for the corresponding observations respectively.
 
 The type of activities include:
 
@@ -13,7 +13,7 @@ The type of activities include:
 
 The subject ID [1 to 30] gives the volunteer an unique ID for the data set.
 
-Each of the other 79 variables of the measurement includes several components which indicate the following:
+Each of the other 70 variables of the measurement includes several components which indicate the following:
 
 * time: measurement in time domain
 * freq: measurement in frequency domain

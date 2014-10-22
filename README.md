@@ -39,9 +39,13 @@ The file run_analysis.R in this repository is used to perform the following:
 
 
 #### Running run_analysis.R
-To run the run_analyis.R script, you do not need to setup anything. There is no prerequisite. Just download the script and run it. It will setup the initial working directory and download the raw dataset if necessary. 
+To run the run_analyis.R script, you do not need to setup anything. There is no prerequisite. Just download the script and run it. To run the script, load it into your RStudio and hit the **Source** to execute. Alternatively, you can select all the script content in RStudio and hit the keyboard button **Ctrl+Enter**.
 
-All other procedures are commented in the script.
+The script will setup the initial working directory and download the raw dataset if necessary. The working files and the tidy data output [tidyData.txt] will be available in the folder named: DataCleaning_Project in your current working directory `getwd()`. 
+
+You can also see the location of the tidyData.txt printed at the end of the console after the script finishes running.
+
+_All other procedures are commented in the script._
 
 
 ### Approach

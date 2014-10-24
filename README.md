@@ -21,9 +21,8 @@ The file run_analysis.R in this repository is used to perform the following:
 
 * Initial setup
     
-    * Create directory and set working directory
-    
-    * Download raw data (if not found in working directory) and unzip it
+    * Check if the raw data set has been downloaded / unzipped in the current directory.
+    * If not, the script will download raw data and unzip it
 
 * Merges the training and the test sets to create one data set
 
@@ -35,13 +34,13 @@ The file run_analysis.R in this repository is used to perform the following:
 
 * Get the average of each variable for each activity and subject
 
-* Wrtie the clean data as .txt output
+* Wrtie the clean data as tidyData.txt in the current directory.
 
 
 #### Running run_analysis.R
 To run the run_analyis.R script, you do not need to setup anything. There is no prerequisite. Just download the script and run it. To run the script, load it into your RStudio and hit the **Source** to execute. Alternatively, you can select all the script content in RStudio and hit the keyboard button **Ctrl+Enter**.
 
-The script will setup the initial working directory and download the raw dataset if necessary. The working files and the tidy data output [tidyData.txt] will be available in the folder named: DataCleaning_Project in your current working directory `getwd()`. 
+The script will check if the raw dataset is available in the current working directory. Else, the script will download and unzip it. The working files and the tidy data output [tidyData.txt] will be available in your current working directory `getwd()`. 
 
 You can also see the location of the tidyData.txt printed at the end of the console after the script finishes running.
 
@@ -49,15 +48,14 @@ _All other procedures are commented in the script._
 
 
 ### Approach
-Once the raw dataset is downloaded, the training and test data sets are loaded and then merged into one single data set using `merge`. 
+Once the raw dataset is available in your current directory, the training and test data sets are loaded and then merged into one single data set using `merge`. 
 The data sets contain alot of information but we are only interested in certain data. Cleaning is done on this data set to ensure that we only extract observations with the mean and standard deviation.
 
 The data set is also labelled with a more descriptive column names using `grep` and `gsub` functions in R.
 Lastly, `aggregate` function is applied on the data set to find the average of each variable for each activity and subject.
 
 The final clean data is saved as tidydata.txt using `write.table` R function.
-
-data set and how they were obtained is provided in the `CodeBook.md` file, 
+Also all the variables will be removed after the script has completed running.
 
 
 ### CodeBook

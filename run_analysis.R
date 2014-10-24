@@ -1,46 +1,47 @@
-# Tested in R Version 3.1.1
-# You need to have internet connection in order to execute this R-script!
+########################################################################
+# Coursera Project: Getting and Cleaning Data
+# Author: BY Chia
+# Last modified: 24 Oct 2014
+########################################################################
+
+# Script tested in R Version 3.1.1
+
+# Either of the following conditions must be satisfied in order for the script to run successfully
+# 1. You have downloaded the UCI Har Dataset.zip and saved it in current working directory.
+# 2. Or you have unzipped the UCI Har Dataset.zip in the current working directory.
+# 3. Or you will need to have internet connection in order to download the dataset needed by this R-script.
 
 # Project Settings / Dataset URL
-projectName <- "DataCleaning_Project"
 dataset <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+datasetFile <- "getdata-projectfiles-UCI HAR Dataset.zip"
+datasetFolder <- "UCI HAR Dataset"
 
-# Check if current directory variable exists
-if(!exists("currentDir"))
-  currentDir <- file.path(getwd(),projectName)
-
-# Check if directory exists
-if(!file.exists(currentDir))
-  dir.create(currentDir)
-
-# Check if current working directory equals to currentDir
-if(getwd()!= currentDir){
-  setwd(currentDir)
-  print(paste("Set Working Directory to:", currentDir))
-}
-
-# Check if dataset exists in currentDir
-if(!file.exists(file.path(currentDir,"dataset.zip"))){
-  download.file(dataset, "dataset.zip", method="curl")
+# Check if dataset folder does not exist in current working directory
+# (user could have downloaded & unzipped the dataset zip)
+if(!file.exists(datasetFolder)){
+  # Check if dataset zip does not exist in current working directory
+  if(!file.exists(datasetFile)){
+    download.file(dataset, datasetFile, method="curl")
+  }
   # Unzip data
-  unzip("dataset.zip") 
+  unzip(datasetFile) 
 }
 
 # Reading Activites & Features data
-activities <- read.table("UCI HAR Dataset/activity_labels.txt")
-features <- read.table("UCI HAR Dataset/features.txt")
+activities <- read.table(file.path(datasetFolder, "activity_labels.txt"))
+features <- read.table(file.path(datasetFolder, "features.txt"))
 
 # Reading Train data
-trainData <- read.table("UCI HAR Dataset/train/X_train.txt")
-trainLabels <- read.table("UCI HAR Dataset/train/y_train.txt")
-trainSubject <- read.table("UCI HAR Dataset/train/subject_train.txt")
+trainData <- read.table(file.path(datasetFolder, "train/X_train.txt"))
+trainLabels <- read.table(file.path(datasetFolder, "train/y_train.txt"))
+trainSubject <- read.table(file.path(datasetFolder, "train/subject_train.txt"))
 trainData$label <- trainLabels$V1
 trainData$subject <- trainSubject$V1
 
 # Reading Test data
-testData <- read.table("UCI HAR Dataset/test/X_test.txt")
-testLabels <- read.table("UCI HAR Dataset/test/y_test.txt")
-testSubject <- read.table("UCI HAR Dataset/test/subject_test.txt")
+testData <- read.table(file.path(datasetFolder, "test/X_test.txt"))
+testLabels <- read.table(file.path(datasetFolder, "test/y_test.txt"))
+testSubject <- read.table(file.path(datasetFolder, "test/subject_test.txt"))
 testData$label <- testLabels$V1
 testData$subject <- testSubject$V1
 
@@ -65,10 +66,10 @@ filterByWanted <- function(data){
   # Create a vector list from the column names of data
   colNames <- colnames(data)
   # Get the indexes of the features names which contain "mean" or "std"
-  wantedColumns <- grep(pattern="mean|std|label|subject", x =colNames)
+  wantedColumns <- grep(pattern="mean|std|label|subject", x=colNames)
   # Discard feature names which contains "BodyBody" because it is not
   # mentioned in the features_info.txt
-  unwantedColumns <- grep(pattern="BodyBody", x =colNames)
+  unwantedColumns <- grep(pattern="BodyBody", x=colNames)
   # Get final wanted columns
   wantedColumns <- setdiff(wantedColumns, unwantedColumns)
   data[,wantedColumns]
@@ -109,4 +110,8 @@ colnames(allData) <- colNames
 ########################################################################
 tidyData <- aggregate(. ~ subject + activity, data=allData, FUN = mean)
 write.table(tidyData, file="tidyData.txt", row.names=FALSE)
-print(paste("Tidy Data Set is written to:", paste(currentDir, "tidyData.txt", sep="/")))
+# Remove all used variables after running the script
+rm(list=ls())
+
+# Location of the Tidy Data set
+print(paste("Tidy Data Set is written to:", file.path(getwd(), "tidyData.txt")))
